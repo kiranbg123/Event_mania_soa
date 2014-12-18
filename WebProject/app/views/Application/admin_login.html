@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<head>
+        <title>#{get 'title' /}</title>
+       
+       <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+      <style>
+      .fError, .fSuccess {
+    text-align: center;
+    position: relative;
+    top: -10px;
+}
+
+.fError {
+    color: #c00;
+}
+
+.fSuccess {
+    color: #0c0;
+}
+#form{
+	text-align: center;
+}
+
+      
+      </style>
+      </head>
+ <body id="crud">
+ <div id="crudHeader">
+            <h1><a> Administrator</a></h1>
+        </div>
+<div id="form">
+#{form @validate_admin(), id:'formLogin'}
+      <br>
+      <br>
+      <br>
+        <p class="field">
+            
+     <strong>   Login Name:</strong>    <input type="text" name="username" size="19" value="${flash.username}" />
+        </p>
+          <br>
+        <p class="field">
+          <strong>   Password:</strong>  <input type="password" name="password" size="19"/>
+        </p>
+        <br>
+      <br>    
+        <p class="buttons">
+            <input type="submit" value="Login" />
+        </p> 
+    #{/form}
+    </div>
+     <br>
+      <br>
+    <div id="content">
+            #{if flash.error}
+                <p class="fError">
+                    <strong>${flash.error}</strong>
+                </p>
+            #{/if}
+            #{if flash.success}
+                <p class="fSuccess">
+                    <strong>${flash.success}</strong>
+                </p>
+            #{/if}
+            
+            
+        </div>
+    
+    </body>

@@ -1,0 +1,77 @@
+#{extends 'main.html' /}
+<!-- #{set title:'Home' /} -->
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+	<style>
+	.head_footer {
+               background-color:brown;
+               color:white;
+               text-align:center;
+               padding:5px;                  
+       } 
+       
+       
+	</style>
+    <!-- Bootstrap core CSS -->
+    
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.min.css'}">
+    <!-- Custom styles for this template -->
+    
+    
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="background:grey; ">
+<div style="background:grey; ">
+<a class = "btn btn-danger pull-right"href="@{admin_login()}">Administrator</a>
+<div class= "head_footer">
+<h1> Event Mania</h1>
+</div>
+<br>
+<br>
+#{form @login(), id:'formLogin'}
+        <p class="field">
+            <!-- <label>Login Credentials: </label> -->
+            <input type="text" name="username" size="19" placeholder ="Username" value="${flash.username}" />
+        </p>
+        <br>
+        <p class="field">
+            <!-- <label>Password:</label> -->
+            <input type="password" name="password" size="19" placeholder = "Password" id = "inputPassword"/>
+        </p>    
+        
+        <p class=" pull-left">
+            <button type="submit" class="btn btn-success" value="Login" >Login</button>
+        </p> 
+    #{/form}
+    <br>
+<a class = "btn btn-primary pull-left" href="@{auth()}">Login with Facebook</a>
+    <br>
+    <br>
+     <p>
+        <a class = "btn btn-info"href="@{register()}">Register New User</a>
+    </p>
+    <script type="text/javascript" charset="${_response_encoding}">
+    sessvars.$.clearMem()
+</script>
+</div>
+</body>
+    
+  

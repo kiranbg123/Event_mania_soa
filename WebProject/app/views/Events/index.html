@@ -1,0 +1,142 @@
+ #{extends 'main.html' /}
+#{set title:'index.html' /}
+
+<head>
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+
+
+</head>
+
+<div id="crud">
+ <div id="crudHeader">
+            <h1><a> Events @ Campus!!!</a></h1>
+        </div>
+ </div>
+<br>
+
+<!-- <label class="form"></label> -->
+<a  class = "btn btn-info pull-right" href = "@{accountHistory()}"> Account History</a>
+
+<input class="from-control" placeholder="Search" id="src1" name="src_t" type="text"> 
+
+<button class="btn btn-primary "id="src_evt"  onclick="src_event()">Search</button>
+<br>
+<br>
+<div id="errormsg">
+</div>
+<div id="msg">
+</div>
+<div id= "evt_tb">
+	<table class="table responsive" id= "evt_tb1"> 
+					 <tr> 
+		               <th>Event Name</th>
+		               <th> Category </th>
+		               <th> Date </th>
+		               <th> Start Time </th>
+		               <th> End Time </th>
+		           		<th> Event ID </th>
+		           		<th> Seats left </th>
+		           		<th> Action </th>
+		           	</tr>
+		          #{list events, as: 'event'}
+		           	<tr>
+		           	  <td>${event.title} </td>
+					  <td>${event.type}</td>
+					  <td>${event.eventdate}</td>
+					  <td>${event.startTime}</td>
+					  <td>${event.endTime}</td>
+					 <td>${event.id}</td>
+					 <td>${event.seatsleft }</td>
+			<td><button class="btn btn-info " id = "reg_b" onclick="reg_func(${event.id})"/>Register</button></td>
+					</tr>
+					 #{/list}
+      	           	
+		           	</table>
+</div>
+
+<br>
+<br>
+
+
+
+ 
+
+<script type="text/javascript">
+
+function src_event(){
+	$.post('@{displayevent()}',{search : $('#src1').val() }, function(events){
+		
+			 $('#evt_tb').html(
+					 '<table id= "evt_tb1" class="table responsive">' +
+					 '<tr>' +
+		               '<th>Event Name</th>' +
+		               '<th> Category </th>' +
+		               '<th> Date </th>' +
+		               '<th> Start Time </th>' +
+		               '<th> End Time </th>' +
+		           		'<th> Event ID </th>' +
+		           		'<th> Seats left </th>' +
+		           		'<th> Action </th>' +
+		           	'</tr>' +
+		           	'</table>')
+		           	 for (var i = 0; i < events.length; i++) {
+		     $('#evt_tb1').append(      	
+			'<tr>'+'<td id="'+ events[i].id+'_t">' + events[i].title + '</td>'+
+			'<td id="'+events[i].id+'_ty">'+ events[i].type + '</td>' +
+			'<td id="'+events[i].id+'_dt">'+ events[i].eventdate + '</td>' +
+			'<td>'+ events[i].startTime + '</td>' +
+			'<td>'+ events[i].endTime + '</td>' +
+			'<td id="'+events[i].id+'_id">' + events[i].id + '</td>' +
+			'<td id="'+events[i].id+'">' + events[i].seatsleft + '</td>' +
+			'<td>' + '<button id = "reg_b" class="btn btn-info" onclick="reg_func('+events[i].id+')" >Register</button>' +'</td>'
+			+'</tr>'
+			 )
+			 
+			       
+		 }
+	},'json')
+		}
+		
+		function reg_func(eventid)
+		{
+			$.post('@{reg_event()}',{id : eventid },function(flagEvent)
+					{
+				if(flagEvent == 0)
+					{
+					$('#errormsg').html('<h3> You need to have student ID to register for event')
+					$('#msg').html('')
+					}
+				else if (flagEvent == 1) 
+				{
+				$('#errormsg').html('<h3> No seats left for this Event')
+				$('#msg').html('')
+				}
+				else if(flagEvent== 2)
+					{
+						$('#errormsg').html('<h3> You are already registered for the event </h3>')
+						$('#msg').html('')
+					}
+					
+				else if(flagEvent == 3)
+					{
+					src_event();
+					$('#errormsg').html('')
+					$('#msg').html('<h3> You have successfully registered for the event')
+					}
+				
+					})
+			
+			
+		
+		}
+	
+		
+		
+
+</script>
+
+
+
+	
+<a class ="btn btn-danger" href= "@{logout()}" >Logout</a>

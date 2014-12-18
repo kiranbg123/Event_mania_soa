@@ -1,0 +1,96 @@
+
+#{set title:'Register' /}
+
+<br>
+<br>
+<head>
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/register.css'}">
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.min.css'}"> 
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+</head>
+
+<div id="crud">
+ <div id="crudHeader">
+            <h1><a> Register!</a></h1>
+        </div>
+ </div>
+<br>
+
+<body>
+#{form @saveUser()}
+<form class= "form-horizontal" role = "form">
+<div class = "form-group" >
+    #{field 'user.username'}
+        <p class="${field.errorClass}">
+        	<Strong> Username </Strong>
+        	
+      		<input type="text" name="${field.name}" size="16" value="${user?.username}"  placeholder="Username">
+    
+         
+            <span class="error">${field.error}</span>
+            
+        </p>
+    #{/field}
+ </div>
+ 
+ <div class = "form-group">
+    #{field 'user.name'}
+        <p class="${field.errorClass}">
+        	<!-- <label for="inputEmail3" class="col-sm-2 control-label"><strong>Real name:</strong> </label> -->
+        	<strong>Real name:</strong>
+    		
+      		<!-- <input type="text" name="${field.name}" size="16" value="${user?.name}" class="form-control" id="inputEmail3" placeholder="Real Name"> -->
+      		<input type="text" name="${field.name}" size="16" value="${user?.name}"  placeholder="Real Name">
+            
+            <span class="error">${field.error}</span>
+        </p>
+    #{/field}
+  </div>
+  
+  #{field 'user.password'}
+        <p class="${field.errorClass}">
+        <!-- <label for="inputPassword3" class="col-sm-2 control-label"><strong>Password:</strong></label> -->
+    	<strong>Password:</strong>
+      		<input type="password" name="${field.name}" size="16" value="${user?.password}"  placeholder="Password">
+    	
+        <span class="error">${field.error}</span>
+        </p>
+    #{/field}    
+    </div>
+   
+    <div class = "form-group">
+    #{field 'verifyPassword'}
+        <p class="${field.errorClass}">
+        <!-- <label for="inputPassword3" class="col-sm-2 control-label"><strong>Verify password:</strong></label> -->
+        <strong>Verify password:</strong>
+    	
+      		<input type="password" name="${field.name}" size="16" value="${verifyPassword}"  placeholder="Verify Password">
+    	
+        <span class="error">${field.error}</span>
+        </p>
+        <br>
+    <br>
+    #{/field}    
+    </div>
+    
+    <p class="buttons">
+        <input type="submit" class ="btn btn-success" value="Register"> <a class ="btn btn-danger" href="@{index()}">Cancel</a>    
+    </p>
+    </form>
+#{/form}
+<div id="content">
+            #{if flash.error}
+                <p class="fError">
+                    <strong>${flash.error}</strong>
+                </p>
+            #{/if}
+            #{if flash.success}
+                <p class="fSuccess">
+                    <strong>${flash.success}</strong>
+                </p>
+            #{/if}
+            
+        
+ </div>
+ </body>

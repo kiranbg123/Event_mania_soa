@@ -1,0 +1,105 @@
+#{extends 'main.html' /}
+#{set title:'account_history.html' /}
+<head>
+
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+
+
+</head>
+<body>
+<div id="crud">
+ <div id="crudHeader">
+            <h1><a> Account History</a></h1>
+        </div>
+ </div>
+
+#{ifnot account_history}
+    <p id = "msg">
+        You have not registered/Cancelled any Event.
+    </p>
+#{/ifnot}
+#{else}
+<div id="msg">
+</div>
+  <div id="acchis">
+<table class = "table responsive" id="evt_tb1">
+<br>
+       <thead>
+           <tr>
+               <th>Event Name</th>
+           		<th> Event ID </th>
+           		<th> Status </th>
+           		<th>Event Date </th>
+           		<th> Start Time </th>
+           		<th>End Time </th>
+           		
+           		<th> Action </th>
+           	</tr>
+       </thead>
+    
+           #{list account_history, as:'account'}
+               <tr>
+                   <td>${account.eventTitle}</td>
+                   <td>${account.eventId}</td>
+                   <td>${account.hasRegistered} </td>
+                   <td>${account.eventDate}</td>
+                   <td>${account.startTime} </td>
+                   <td>${account.endTime} </td>
+                  <!--    <td><a href = "@{cancel_Registration(account.eventId)}"<button> Cancel</button> </a> -->
+                <td><button class = "btn btn-info" id = "can_b" onclick="can_func(${account.eventId})">Cancel</button></td>
+			
+                </tr>
+           #{/list}
+      
+   </table>
+   </div>
+   #{/else} 
+   </br>
+   </br>
+
+   
+   
+   
+   <script type="text/javascript">
+   function can_func(eventid)
+	{
+		$.post('@{cancel_Registration()}',{id : eventid },function(account_history){
+			if (account_history == null)
+				$('#msg').html('<h3> You have already cancelled  the registration for this event')
+			else
+			{
+			 $('#acchis').html(
+					 '<table id= "evt_tb1" class = "table responsive">' +
+					 '<tr>' +
+					 '<th>Event Name</th>'+
+		           		'<th> Event ID </th>'+
+		           		'<th> Status </th>'+
+		           	 '<th>Date</th>'+
+		           		'<th> Start TIme </th>'+
+		           		'<th> End Time </th>'+
+		           		'<th> Action </th>'+
+		           	'</tr>' +
+		           	'</table>')
+		           	 for (var i = 0; i < account_history.length; i++) {
+		     $('#evt_tb1').append(      	
+			'<tr>'+
+			 '<td>' + account_history[i].eventTitle + '</td>'+
+               '<td>' + account_history[i].eventId + '</td>'+
+               '<td>' + account_history[i].hasRegistered +'</td>'+
+               '<td>' + account_history[i].eventDate + '</td>'+
+               '<td>' + account_history[i].startTime + '</td>'+
+               '<td>' + account_history[i].endTime +'</td>'+
+             '<td>' +'<button id = "can_b" class = "btn btn-info" onclick="can_func('+ account_history[i].eventId +')">Cancel</button></td>'
+		
+			+'</tr>'
+			 )
+			 
+			    $('#msg').html('<h3> You have successfully cancelled the registration for this event </h3>')  
+		           	 }	
+		 }
+		},'json')
+		
+	}
+   </script>
+<a href="@{index()}" >Back to Events</a>
+</body>

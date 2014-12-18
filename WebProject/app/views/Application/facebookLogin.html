@@ -1,0 +1,15 @@
+<!--  
+#{extends 'main.html' /} 
+#{set title:'facebookLogin.html' /}
+-->
+
+ <!--  The following code is for Facebook Login -->
+ #{if me}
+ 
+<h3>You're ${me.get("name")} on Facebook</h3>
+<a href="@{continueToEvents()}">Continue to View Events</a>
+
+#{/if}
+#{else}
+<a href="@{auth()}">login with Facebook</a>
+#{/else}
